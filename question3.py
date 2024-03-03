@@ -18,7 +18,7 @@ class MyMapReduce(MRJob):
 
     def sort_counts(self, _, pair):
         for counts, payment_type in sorted(pair, reverse=True):
-            yield(counts, payment_type)
+            yield(payment_type, counts)
 
     def steps(self):
         return [MRStep(mapper=self.mapper,
