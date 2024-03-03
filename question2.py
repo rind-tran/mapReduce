@@ -12,23 +12,14 @@ class MyMapReduce(MRJob):
 
     # Our reducer takes a group of (key, value) where key = word, and produces a final (key, value)
     # The key is a word and its value is the number of occurrences of the word
-    def reducer(self, PULocationID, total_amount):
-        my_dict = {}
-        my_dict_count = {}
-        if PULocationID not in my_dict:
-            my_dict[PULocationID] = total_amount
-            my_dict_count[PULocationID] = 1
-        else:
-            my_dict[PULocationID] += total_amount
-            my_dict_count[PULocationID] += 1
-        for item in my_dict:
-            yield item, my_dict[item]/my_dict_count[item]
+    def reducer(self, location, total_amount):
+        yield None, (sum(total_amount), location)
 
 
     def sort_by_amount(self, _, pair):
         sorted_pairs = sorted(pair, reverse=True)
-        for pair in sorted_pairs:
-            yield pair
+        for revenue, location in sorted_pairs:
+            yield location, revenue
 
     def steps(self):
         return [
