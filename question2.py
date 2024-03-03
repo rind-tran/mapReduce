@@ -11,7 +11,6 @@ class MyMapReduce(MRJob):
             yield (line[7], float(line[16]))
 
     # Our reducer takes a group of (key, value) where key = word, and produces a final (key, value)
-    # The key is a word and its value is the number of occurrences of the word
     def reducer(self, location, total_amount):
         yield None, (sum(total_amount), location)
 
